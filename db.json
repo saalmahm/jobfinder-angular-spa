@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "id": "5e32",
+      "firstName": "Salma",
+      "lastName": "Hamdi",
+      "email": "salmahamdi@gmail.com",
+      "password": "salmahamdi@gmail.com"
+    }
+  ],
+  "favoritesOffers": [],
+  "applications": []
+}

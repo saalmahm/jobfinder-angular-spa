@@ -1,0 +1,38 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
+@Component({
+  standalone: true,
+  selector: 'app-main-layout',
+  imports: [CommonModule, RouterModule],
+  template: `
+    <header class="bg-slate-900 border-b border-slate-800 py-4 px-6">
+      <nav class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-xl">J</span>
+          </div>
+          <span class="text-xl font-bold text-white tracking-tight">JobFinder</span>
+        </div>
+        <div class="hidden md:flex items-center gap-8">
+          <a routerLink="/" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Accueil</a>
+          <a routerLink="/search" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Recherche</a>
+          <a routerLink="/favorites" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Favoris</a>
+          <a routerLink="/applications" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Candidatures</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a routerLink="/login" class="text-slate-300 hover:text-white text-sm font-medium px-4 py-2">Connexion</a>
+          <a routerLink="/register" class="bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl">Inscription</a>
+        </div>
+      </nav>
+    </header>
+
+    <main><router-outlet></router-outlet></main>
+
+    <footer class="bg-slate-900 border-t border-slate-800 py-8 text-center">
+      <p class="text-slate-500 text-sm">© 2026 JobFinder — Plateforme de recherche d'emploi</p>
+    </footer>
+  `
+})
+export class MainLayoutComponent {}

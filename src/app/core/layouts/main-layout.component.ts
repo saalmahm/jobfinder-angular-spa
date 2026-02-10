@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   standalone: true,
@@ -15,15 +16,31 @@ import { RouterModule } from '@angular/router';
           </div>
           <span class="text-xl font-bold text-white tracking-tight">JobFinder</span>
         </div>
+
         <div class="hidden md:flex items-center gap-8">
-          <a routerLink="/" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Accueil</a>
-          <a routerLink="/search" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Recherche</a>
-          <a routerLink="/favorites" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Favoris</a>
-          <a routerLink="/applications" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Candidatures</a>
+          <a routerLink="/" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Home</a>
+          <a routerLink="/search" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Search</a>
+          <a routerLink="/favorites" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Favorites</a>
+          <a routerLink="/applications" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Applications</a>
         </div>
+
         <div class="flex items-center gap-4">
-          <a routerLink="/login" class="text-slate-300 hover:text-white text-sm font-medium px-4 py-2">Connexion</a>
-          <a routerLink="/register" class="bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl">Inscription</a>
+          <ng-container *ngIf="isAuthenticated(); else guest">
+            <a routerLink="/profile" class="text-slate-300 hover:text-white text-sm font-medium px-4 py-2">
+              Profile
+            </a>
+            <button
+              type="button"
+              (click)="logout()"
+              class="bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium px-5 py-2.5 rounded-xl">
+              Log out
+            </button>
+          </ng-container>
+
+          <ng-template #guest>
+            <a routerLink="/login" class="text-slate-300 hover:text-white text-sm font-medium px-4 py-2">Log in</a>
+            <a routerLink="/register" class="bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl">Sign up</a>
+          </ng-template>
         </div>
       </nav>
     </header>
@@ -31,8 +48,20 @@ import { RouterModule } from '@angular/router';
     <main><router-outlet></router-outlet></main>
 
     <footer class="bg-slate-900 border-t border-slate-800 py-8 text-center">
-      <p class="text-slate-500 text-sm">© 2026 JobFinder — Plateforme de recherche d'emploi</p>
+      <p class="text-slate-500 text-sm">© 2026 JobFinder — Job search platform</p>
     </footer>
   `
 })
-export class MainLayoutComponent {}
+export class MainLayoutComponent {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+}

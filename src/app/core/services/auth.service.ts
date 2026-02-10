@@ -75,11 +75,33 @@ export class AuthService {
   }
 
   private setCurrentUser(user: Omit<User, 'password'>, mode: StorageMode): void {
-    // nettoyage pour éviter d’avoir 2 sources en même temps
     sessionStorage.removeItem(this.STORAGE_KEY);
     localStorage.removeItem(this.STORAGE_KEY);
 
     const target = mode === 'local' ? localStorage : sessionStorage;
     target.setItem(this.STORAGE_KEY, JSON.stringify(user));
+  }
+
+  /**
+   * Met à jour les informations de l'utilisateur
+   */
+  updateUser(id: string | number, userData: Partial<User>): Observable<Omit<User, 'password'>> {
+    return this.http.patch<User>(`${this.apiUrl}/${id}`, userData).pipe(
+      map(user => {
+        const { password, ...safeUser } = user;
+        const mode: StorageMode = localStorage.getItem(this.STORAGE_KEY) ? 'local' : 'session';
+        this.setCurrentUser(safeUser, mode);
+        return safeUser;
+      })
+    );
+  }
+
+  /**
+   * Supprime le compte utilisateur
+   */
+  deleteUser(id: string | number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      tap(() => this.logout())
+    );
   }
 }

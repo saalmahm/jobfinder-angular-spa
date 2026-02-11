@@ -35,36 +35,17 @@
         <p class="text-xs text-slate-500 mt-1">Try adjusting your keywords or location to find more jobs.</p>
       </div>
 
-      <!-- Liste des résultats -->
-      <div *ngIf="!isLoading && results.length > 0" class="grid gap-4">
-        <div *ngFor="let job of results" class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm hover:border-blue-300 transition-all cursor-pointer group">
-          <div class="flex justify-between items-start gap-4">
-            <div class="min-w-0">
-              <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate">
-                {{ job.title }}
-              </h3>
-              <div class="flex items-center gap-2 mt-1 text-sm text-slate-600">
-                <span class="font-medium truncate">{{ job.company }}</span>
-                <span class="text-slate-300">•</span>
-                <span class="truncate">{{ job.location }}</span>
-              </div>
-              <div class="mt-4 flex items-center gap-3">
-                <span class="px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 text-[10px] font-bold uppercase tracking-wider">
-                  Full-time
-                </span>
-                <span class="text-[11px] text-slate-400 font-medium">
-                  Posted {{ job.date | date:'mediumDate' }}
-                </span>
-              </div>
-            </div>
-            
-            <button class="shrink-0 p-2 rounded-xl text-slate-300 hover:text-red-500 hover:bg-red-50 transition-all">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </button>
-          </div>
-        </div>
+      <!-- Résultats -->
+      <div *ngIf="!isLoading && results.length > 0">
+        <app-job-results-list 
+          [jobs]="results" 
+          [totalItems]="results.length"
+          [itemsPerPage]="itemsPerPage"
+          [currentPage]="currentPage"
+          (pageChange)="onPageChange($event)"
+          (addToFavorites)="onAddToFavorites($event)"
+          (applyToJob)="onApplyToJob($event)">
+        </app-job-results-list>
       </div>
 
       <!-- Last Search Info (optionnel, affiché seulement si utile) -->

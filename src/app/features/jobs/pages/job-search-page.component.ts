@@ -104,7 +104,6 @@ export class JobSearchPageComponent implements OnInit {
 
   onApplyToJob(job: JobOffer): void {
     console.log('Apply to job:', job);
-    // TODO: Implement application tracking logic in next story
     alert('Application tracked (Mock)');
   }
 

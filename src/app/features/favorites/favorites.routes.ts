@@ -1,12 +1,5 @@
 import { Routes } from '@angular/router';
-import { Component } from '@angular/core';
-
-@Component({
-  standalone: true,
-  selector: 'app-job-search-page',
-  template: `<h1>Favorites Page </h1>`,
-})
-export class FavoritesPageComponent  {}
+import { FavoritesPageComponent } from './favorites-page.component';
 
 export const FAVORITES_ROUTES: Routes = [
   {

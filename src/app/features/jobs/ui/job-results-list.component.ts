@@ -16,6 +16,7 @@ export class JobResultsListComponent {
   @Input() totalItems = 0;
   @Input() itemsPerPage = 10;
   @Input() currentPage = 1;
+  @Input() favoriteIds: Set<string | number> = new Set();
 
   @Output() pageChange = new EventEmitter<number>();
   @Output() addToFavorites = new EventEmitter<JobOffer>();
@@ -34,6 +35,16 @@ export class JobResultsListComponent {
     return this.authService.isAuthenticated();
   }
 
+  isFavorite(job: JobOffer): boolean {
+    if (job.id === undefined || job.id === null) return false;
+    return Array.from(this.favoriteIds).some(favId => String(favId) === String(job.id));
+  }
+
+  openJob(job: JobOffer): void {
+    if (!job.sourceUrl) return;
+    window.open(job.sourceUrl, '_blank', 'noopener');
+  }
+
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.pageChange.emit(page);
@@ -41,10 +52,8 @@ export class JobResultsListComponent {
   }
 
   getPages(): number[] {
-    const pages = [];
-    for (let i = 1; i <= this.totalPages; i++) {
-      pages.push(i);
-    }
+    const pages: number[] = [];
+    for (let i = 1; i <= this.totalPages; i++) pages.push(i);
     return pages;
   }
 }

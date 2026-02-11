@@ -17,14 +17,13 @@
         <div class="text-sm font-semibold text-slate-900">
           Results <span *ngIf="results.length > 0" class="ml-1 text-slate-400">({{ results.length }})</span>
         </div>
-        
+
         <div *ngIf="isLoading" class="flex items-center gap-2 text-blue-600">
           <div class="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
           <span class="text-xs font-semibold">Searching...</span>
         </div>
       </div>
-      
-      <!-- État vide ou initial -->
+
       <div *ngIf="!isLoading && results.length === 0" class="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center">
         <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-slate-50 text-slate-400 mb-4">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -35,20 +34,19 @@
         <p class="text-xs text-slate-500 mt-1">Try adjusting your keywords or location to find more jobs.</p>
       </div>
 
-      <!-- Résultats -->
       <div *ngIf="!isLoading && results.length > 0">
-        <app-job-results-list 
-          [jobs]="results" 
+        <app-job-results-list
+          [jobs]="results"
           [totalItems]="results.length"
           [itemsPerPage]="itemsPerPage"
           [currentPage]="currentPage"
+          [favoriteIds]="(favoriteOfferIds$ | async) || emptySet"
           (pageChange)="onPageChange($event)"
           (addToFavorites)="onAddToFavorites($event)"
           (applyToJob)="onApplyToJob($event)">
         </app-job-results-list>
       </div>
 
-      <!-- Last Search Info (optionnel, affiché seulement si utile) -->
       <div *ngIf="lastSearch && results.length > 0" class="mt-8 pt-8 border-t border-slate-200 flex flex-wrap gap-4">
         <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest w-full">Current Filters</div>
         <div class="px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700">

@@ -36,7 +36,13 @@ export class JobResultsListComponent {
   }
 
   isFavorite(job: JobOffer): boolean {
-    return job.id !== undefined && this.favoriteIds.has(String(job.id));
+    if (job.id === undefined || job.id === null) return false;
+    return Array.from(this.favoriteIds).some(favId => String(favId) === String(job.id));
+  }
+
+  openJob(job: JobOffer): void {
+    if (!job.sourceUrl) return;
+    window.open(job.sourceUrl, '_blank', 'noopener');
   }
 
   onPageChange(page: number): void {
@@ -46,10 +52,8 @@ export class JobResultsListComponent {
   }
 
   getPages(): number[] {
-    const pages = [];
-    for (let i = 1; i <= this.totalPages; i++) {
-      pages.push(i);
-    }
+    const pages: number[] = [];
+    for (let i = 1; i <= this.totalPages; i++) pages.push(i);
     return pages;
   }
 }

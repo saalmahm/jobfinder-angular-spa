@@ -10,7 +10,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { FavoritesActions } from '../../favorites/state/favorites.actions';
 import { selectFavoriteOfferIds, selectFavoritesItems } from '../../favorites/state/favorites.selectors';
 import { FavoriteOffer } from '../../../core/models/favorite-offer.model';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -60,7 +60,7 @@ export class JobSearchPageComponent implements OnInit {
       error: (err) => {
         console.error('Search error:', err);
         this.isLoading = false;
-      }
+      },
     });
   }
 
@@ -82,7 +82,6 @@ export class JobSearchPageComponent implements OnInit {
     const existing = this.favorites.find(
       (f) => String(f.offerId) === String(offerId)
     );
-    
     if (existing?.id !== undefined && existing?.id !== null) {
       this.store.dispatch(FavoritesActions.removeFavorite({ id: existing.id }));
       return;

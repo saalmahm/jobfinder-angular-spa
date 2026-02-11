@@ -11,6 +11,9 @@ type TheMuseJob = {
   publication_date: string;
   locations?: Array<{ name: string }>;
   company?: { name: string };
+  refs?: {
+    landing_page?: string;
+  };
 };
 
 type TheMuseJobsResponse = {
@@ -55,6 +58,7 @@ export class JobsService {
           location: j.locations?.[0]?.name || '—',
           date: j.publication_date,
           description: j.contents,
+          sourceUrl: j.refs?.landing_page,
         }));
 
         // Filtrer par titre (mot clé dans le titre uniquement)

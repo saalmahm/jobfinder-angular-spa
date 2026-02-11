@@ -5,4 +5,5 @@ export interface JobOffer {
   location: string;
   date: string;
   description: string;
+  sourceUrl?: string;
 }

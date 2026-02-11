@@ -37,7 +37,9 @@
 
       <!-- Liste des résultats -->
       <div *ngIf="!isLoading && results.length > 0" class="grid gap-4">
-        <div *ngFor="let job of results" class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm hover:border-blue-300 transition-all cursor-pointer group">
+        <div *ngFor="let job of results"
+             (click)="openJob(job)"
+             class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm hover:border-blue-300 transition-all cursor-pointer group">
           <div class="flex justify-between items-start gap-4">
             <div class="min-w-0">
               <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate">
@@ -58,8 +60,15 @@
               </div>
             </div>
             
-            <button class="shrink-0 p-2 rounded-xl text-slate-300 hover:text-red-500 hover:bg-red-50 transition-all">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button (click)="toggleFavorite(job); $event.stopPropagation()"
+                    class="shrink-0 p-2 rounded-xl transition-all"
+                    [class.text-blue-600]="isFavorite(job)"
+                    [class.bg-blue-50]="isFavorite(job)"
+                    [class.text-slate-300]="!isFavorite(job)"
+                    [class.hover:text-blue-600]="!isFavorite(job)"
+                    [class.hover:bg-blue-50]="!isFavorite(job)"
+                    title="Toggle favorite">
+              <svg class="w-6 h-6" [attr.fill]="isFavorite(job) ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
             </button>

@@ -1,0 +1,107 @@
+import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { JobSearchCriteria } from '../../../core/models/job-search-criteria.model';
+
+@Component({
+  standalone: true,
+  selector: 'app-job-search-form',
+  imports: [CommonModule, ReactiveFormsModule],
+  template: `
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Keyword</label>
+          <input
+            type="text"
+            formControlName="keyword"
+            placeholder="e.g. Angular developer"
+            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white
+                   focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition"
+          />
+          <p
+            *ngIf="form.get('keyword')?.touched && form.get('keyword')?.hasError('required')"
+            class="mt-2 text-xs text-red-600"
+          >
+            Keyword is required.
+          </p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Location</label>
+          <input
+            type="text"
+            formControlName="location"
+            placeholder="e.g. Tunis, Remote"
+            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white
+                   focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 transition"
+          />
+        </div>
+      </div>
+
+      <div
+        *ngIf="businessError"
+        class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+      >
+        {{ businessError }}
+      </div>
+
+      <div class="flex items-center gap-3 pt-1">
+        <button
+          type="submit"
+          [disabled]="form.invalid"
+          class="px-6 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-500 transition disabled:opacity-50"
+        >
+          Search
+        </button>
+
+        <button
+          type="button"
+          (click)="reset()"
+          class="px-6 py-2.5 rounded-xl bg-white text-slate-700 text-sm font-semibold border border-slate-200 hover:bg-slate-50 transition"
+        >
+          Reset
+        </button>
+      </div>
+    </form>
+  `,
+})
+export class JobSearchFormComponent {
+  private fb = inject(FormBuilder);
+
+  @Output() search = new EventEmitter<JobSearchCriteria>();
+
+  businessError = '';
+
+  form = this.fb.group({
+    keyword: ['', [Validators.required]],
+    location: [''],
+  });
+
+  submit(): void {
+    this.businessError = '';
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const keyword = (this.form.value.keyword || '').trim();
+    const location = (this.form.value.location || '').trim();
+
+    if (!keyword) {
+      this.businessError = 'Keyword cannot be empty.';
+      return;
+    }
+
+    this.search.emit({
+      keyword,
+      location: location || undefined,
+    });
+  }
+
+  reset(): void {
+    this.businessError = '';
+    this.form.reset({ keyword: '', location: '' });
+  }
+}

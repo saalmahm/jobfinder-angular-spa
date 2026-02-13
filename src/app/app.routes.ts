@@ -1,17 +1,24 @@
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './core/layouts/main-layout.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   // Pages SANS Navbar/Footer
   {
     path: 'login',
-    loadComponent: () => import('./features/auth/login-page.component').then(m => m.LoginPageComponent),
+    loadComponent: () =>
+      import('./features/auth/login-page.component').then(
+        (m) => m.LoginPageComponent,
+      ),
   },
   {
     path: 'register',
-    loadComponent: () => import('./features/auth/register-page.component').then(m => m.RegisterPageComponent),
+    loadComponent: () =>
+      import('./features/auth/register-page.component').then(
+        (m) => m.RegisterPageComponent,
+      ),
   },
-  
+
   // Pages AVEC Navbar/Footer
   {
     path: '',
@@ -19,25 +26,41 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./features/home/home-page.component').then(m => m.HomePageComponent),
+        loadComponent: () =>
+          import('./features/home/home-page.component').then(
+            (m) => m.HomePageComponent,
+          ),
       },
       {
         path: 'profile',
-        loadComponent: () => import('./features/auth/profile-page.component').then(m => m.ProfilePageComponent),
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./features/auth/profile-page.component').then(
+            (m) => m.ProfilePageComponent,
+          ),
       },
       {
         path: 'search',
-        loadChildren: () => import('./features/jobs/jobs.routes').then(m => m.JOBS_ROUTES),
+        loadChildren: () =>
+          import('./features/jobs/jobs.routes').then((m) => m.JOBS_ROUTES),
       },
       {
         path: 'favorites',
-        loadChildren: () => import('./features/favorites/favorites.routes').then(m => m.FAVORITES_ROUTES),
+        canActivate: [authGuard],
+        loadChildren: () =>
+          import('./features/favorites/favorites.routes').then(
+            (m) => m.FAVORITES_ROUTES,
+          ),
       },
       {
         path: 'applications',
-        loadChildren: () => import('./features/applications/applications.routes').then(m => m.APPLICATIONS_ROUTES),
+        canActivate: [authGuard],
+        loadChildren: () =>
+          import('./features/applications/applications.routes').then(
+            (m) => m.APPLICATIONS_ROUTES,
+          ),
       },
-    ]
+    ],
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];

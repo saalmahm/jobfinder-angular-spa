@@ -37,12 +37,7 @@ export class JobResultsListComponent {
 
   isFavorite(job: JobOffer): boolean {
     if (job.id === undefined || job.id === null) return false;
-    return Array.from(this.favoriteIds).some(favId => String(favId) === String(job.id));
-  }
-
-  openJob(job: JobOffer): void {
-    if (!job.sourceUrl) return;
-    window.open(job.sourceUrl, '_blank', 'noopener');
+    return this.favoriteIds.has(String(job.id));
   }
 
   onPageChange(page: number): void {

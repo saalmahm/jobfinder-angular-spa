@@ -1,8 +1,14 @@
 # 🎯 JobFinder
 
-Application web moderne de recherche d'emploi développée avec Angular 19.
+Application web moderne de recherche d'emploi développée avec **Angular 19**.
 
-![Test Screenshot](home_test.png)
+---
+
+## 📸 Aperçu
+
+![Home Preview](./screenshots/home.png)
+
+---
 
 ## 📋 Table des matières
 
@@ -15,55 +21,53 @@ Application web moderne de recherche d'emploi développée avec Angular 19.
 - [Architecture](#-architecture)
 - [API](#-api)
 - [Gestion d'état](#-gestion-détat)
-- [Design System](#-design-system)
-
-## 📸 Screenshots
-
-### Authentification
-Interfaces de connexion et d'inscription sécurisées et intuitives.
-
-![Connexion](login.png)
-
-![Inscription](signup.png)
+- [Licence](#-licence)
 
 ---
 
-### Page d'accueil
-Interface moderne avec recherche rapide et offres populaires.
+# 📸 Screenshots
 
-![Page d'accueil](home.png)
+## 🔐 Authentification
 
----
+### Connexion
+![Login](./screenshots/login.png)
 
-### Recherche d'emploi
-Recherche avancée avec résultats en temps réel et boutons d'action.
-
-![Page de recherche](search.png)
+### Inscription
+![Signup](./screenshots/signup.png)
 
 ---
 
-### Mes Favoris
-Gestion des offres sauvegardées en grille de cartes responsive.
+## 🏠 Page d'accueil
 
-![Page des favoris](favorites.png)
-
----
-
-### Mes Candidatures
-Suivi complet des candidatures avec statuts, filtres et notes personnelles.
-
-![Page des candidatures](applications.png)
+![Home](./screenshots/home.png)
 
 ---
 
-### Profil Utilisateur
-Gestion des informations personnelles et paramètres du compte.
+## 🔎 Recherche d'emploi
 
-![Page de profil](profile.png)
+![Search](./screenshots/search.png)
 
 ---
 
-## ✨ Fonctionnalités
+## ⭐ Mes Favoris
+
+![Favorites](./screenshots/favorites.png)
+
+---
+
+## 📝 Mes Candidatures
+
+![Applications](./screenshots/applications.png)
+
+---
+
+## 👤 Profil Utilisateur
+
+![Profile](./screenshots/profile.png)
+
+---
+
+# ✨ Fonctionnalités
 
 ### 🔐 Authentification
 - Inscription et connexion des utilisateurs

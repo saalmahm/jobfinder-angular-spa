@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../../core/services/auth.service';
 import { FavoriteOffer } from '../../core/models/favorite-offer.model';
@@ -9,7 +10,7 @@ import { selectFavoritesError, selectFavoritesItems, selectFavoritesLoading } fr
 @Component({
   standalone: true,
   selector: 'app-favorites-page',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './favorites-page.component.html',
 })
 export class FavoritesPageComponent implements OnInit {

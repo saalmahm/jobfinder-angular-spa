@@ -1,0 +1,335 @@
+<!-- ================= HERO SECTION WITH BACKGROUND IMAGE ================= -->
+<section class="relative min-h-[700px] flex items-center justify-center overflow-hidden bg-slate-800">
+
+  <!-- Background Image with Overlay -->
+  <div class="absolute inset-0 z-0">
+    <img src="/bg-login.png" alt="Background" class="w-full h-full object-cover opacity-30" />
+    <div class="absolute inset-0 bg-slate-800/80"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-6xl mx-auto px-6 py-40 text-center">
+
+    <!-- Title -->
+    <h1 class="text-5xl md:text-6xl lg:text-7xl font-serif text-white leading-tight mb-6">
+      Trouvez le job qui vous
+      <br />
+      <span class="italic text-blue-300">ressemble vraiment.</span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-14 leading-relaxed">
+      Une recherche simplifiée, des opportunités ciblées et des outils pour propulser votre carrière.
+    </p>
+
+    <!-- Search Form -->
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()"
+      class="max-w-4xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-2.5 flex flex-col sm:flex-row items-center gap-2">
+
+      <!-- Keyword Input -->
+      <div class="flex-1 flex items-center gap-3 px-5 py-4 w-full">
+        <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input type="text" formControlName="keyword" placeholder="Métier, mots-clés..."
+          class="flex-1 outline-none text-slate-900 placeholder:text-slate-500 bg-transparent text-base" />
+      </div>
+
+      <!-- Divider -->
+      <div class="hidden sm:block w-px h-12 bg-slate-200"></div>
+
+      <!-- Location Input -->
+      <div class="flex-1 flex items-center gap-3 px-5 py-4 w-full">
+        <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+        <input type="text" formControlName="location" placeholder="Ville ou télétravail"
+          class="flex-1 outline-none text-slate-900 placeholder:text-slate-500 bg-transparent text-base" />
+      </div>
+
+      <!-- Location Button -->
+      <button type="button" class="px-4 py-4 hover:bg-slate-100 rounded-xl transition-colors">
+        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      </button>
+
+      <!-- Search Button -->
+      <button type="submit"
+        class="w-full sm:w-auto px-10 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
+        Chercher
+      </button>
+
+    </form>
+
+    <!-- Jobs Count Badge -->
+    <div class="mt-10 flex items-center justify-center gap-2.5 text-base">
+      <span class="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></span>
+      <span class="text-slate-200"><strong class="text-white font-semibold">{{ allJobs.length }}</strong> nouveaux jobs
+        aujourd'hui</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= MESSAGES ================= -->
+<div *ngIf="successMessage || errorMessage" class="max-w-6xl mx-auto px-6 py-6">
+
+  <div *ngIf="successMessage"
+    class="p-4 rounded-xl bg-green-50 border border-green-200 text-sm text-green-800 flex items-center gap-3">
+    <svg class="w-5 h-5 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+      <path fill-rule="evenodd"
+        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
+    </svg>
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage"
+    class="p-4 rounded-xl bg-red-50 border border-red-200 text-sm text-red-800 flex items-center gap-3">
+    <svg class="w-5 h-5 text-red-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+      <path fill-rule="evenodd"
+        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" />
+    </svg>
+    {{ errorMessage }}
+  </div>
+
+</div>
+
+
+<!-- ================= JOBS SECTION ================= -->
+<section class="py-20 bg-slate-50">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-12">
+      <div>
+        <h2 class="text-3xl font-bold text-slate-900 mb-2">
+          {{ hasSearched ? 'Résultats de recherche' : 'Dernières opportunités' }}
+        </h2>
+        <p class="text-slate-600">
+          {{ allJobs.length }} poste{{ allJobs.length !== 1 ? 's' : '' }} disponible{{ allJobs.length !== 1 ? 's' : ''
+          }}
+        </p>
+      </div>
+
+      <a *ngIf="!hasSearched" routerLink="/search"
+        class="hidden sm:flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-xl transition">
+        Voir tous les jobs
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="flex justify-center py-24">
+      <div class="relative">
+        <div class="w-16 h-16 border-4 border-slate-100 rounded-full"></div>
+        <div
+          class="absolute top-0 left-0 w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin">
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && allJobs.length === 0"
+      class="text-center py-24 bg-white rounded-2xl border-2 border-dashed border-slate-300">
+
+      <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+
+      <h3 class="text-xl font-semibold text-slate-900 mb-3">
+        Aucune offre trouvée
+      </h3>
+
+      <p class="text-slate-600 mb-8 max-w-md mx-auto">
+        Nous n'avons pas trouvé d'offres correspondant à votre recherche. Essayez d'ajuster vos critères.
+      </p>
+
+      <button (click)="loadInitialJobs()"
+        class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors">
+        Réinitialiser la recherche
+      </button>
+
+    </div>
+
+
+    <!-- Jobs Grid -->
+    <div *ngIf="!isLoading && displayedJobs.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div *ngFor="let job of displayedJobs; trackBy: trackById"
+        class="group bg-white border border-slate-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-xl transition-all duration-300">
+
+        <!-- Header: Company + Favorite -->
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-3">
+            <!-- Company Logo Placeholder -->
+            <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+              {{ job.company.charAt(0) }}
+            </div>
+            <div>
+              <div class="text-sm font-semibold text-slate-900">{{ job.company }}</div>
+              <div class="text-xs text-slate-500">{{ job.date | date: 'dd MMM yyyy' }}</div>
+            </div>
+          </div>
+
+          <!-- Favorite Button -->
+          <button *ngIf="isAuthenticated() && (favoriteOfferIds$ | async) as favoriteIds"
+            (click)="onAddToFavorites(job)" class="p-2 hover:bg-slate-100 rounded-lg transition"
+            [class.text-rose-500]="isFavorite(job, favoriteIds)" [class.text-slate-400]="!isFavorite(job, favoriteIds)">
+            <svg class="w-5 h-5" [attr.fill]="isFavorite(job, favoriteIds) ? 'currentColor' : 'none'"
+              stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Title -->
+        <h3 (click)="openJob(job)"
+          class="text-lg font-bold text-slate-900 mb-3 line-clamp-2 cursor-pointer group-hover:text-blue-600 transition-colors">
+          {{ job.title }}
+        </h3>
+
+        <!-- Location -->
+        <div class="flex items-center gap-2 text-sm text-slate-600 mb-4">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          {{ job.location }}
+        </div>
+
+        <!-- Description -->
+        <div class="text-sm text-slate-600 line-clamp-3 mb-6" [innerHTML]="job.description"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-3">
+          <button (click)="openJob(job)"
+            class="flex-1 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-700 transition-colors">
+            Voir les détails
+          </button>
+
+          <button *ngIf="isAuthenticated()" (click)="onTrackApplication(job)"
+            class="px-4 py-2.5 rounded-xl text-sm font-medium transition-all" [class.bg-green-100]="isTracked(job)"
+            [class.text-green-700]="isTracked(job)" [class.bg-slate-100]="!isTracked(job)"
+            [class.text-slate-700]="!isTracked(job)" [class.hover:bg-slate-200]="!isTracked(job)">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                [attr.d]="isTracked(job) ? 'M5 13l4 4L19 7' : 'M12 4v16m8-8H4'" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Pagination -->
+    <div *ngIf="!isLoading && displayedJobs.length > 0 && totalPages > 1"
+      class="flex items-center justify-center gap-2 mt-16">
+
+      <!-- Previous Button -->
+      <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"
+        class="p-3 rounded-xl border border-slate-200 text-slate-600 hover:bg-white hover:shadow-sm disabled:opacity-30 disabled:cursor-not-allowed transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 18-6-6 6-6" />
+        </svg>
+      </button>
+
+      <!-- Page Numbers -->
+      <div class="flex items-center gap-2">
+        <button *ngFor="let page of getPages()" (click)="onPageChange(page)"
+          class="min-w-[44px] h-11 px-4 rounded-xl text-sm font-semibold transition-all"
+          [class.bg-blue-600]="page === currentPage" [class.text-white]="page === currentPage"
+          [class.shadow-lg]="page === currentPage" [class.text-slate-600]="page !== currentPage"
+          [class.hover:bg-white]="page !== currentPage" [class.hover:shadow-sm]="page !== currentPage">
+          {{ page }}
+        </button>
+      </div>
+
+      <!-- Next Button -->
+      <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages"
+        class="p-3 rounded-xl border border-slate-200 text-slate-600 hover:bg-white hover:shadow-sm disabled:opacity-30 disabled:cursor-not-allowed transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18 6-6-6-6" />
+        </svg>
+      </button>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ================= CTA SECTION ================= -->
+<section *ngIf="!isAuthenticated()" class="py-24 bg-slate-800 relative overflow-hidden">
+
+  <!-- Decorative Background -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute inset-0 bg-slate-700"></div>
+  </div>
+
+  <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+
+    <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+      Prêt à trouver votre<br class="hidden sm:block" /> prochaine opportunité ?
+    </h2>
+
+    <p class="text-lg md:text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+      Créez votre compte pour enregistrer des offres, suivre vos candidatures et ne manquer aucune opportunité.
+    </p>
+
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <a routerLink="/register"
+        class="px-10 py-4 bg-white text-slate-900 rounded-xl font-semibold hover:shadow-2xl transform hover:scale-105 transition-all text-lg">
+        Créer un compte gratuit
+      </a>
+
+      <a routerLink="/login"
+        class="px-10 py-4 bg-white/10 backdrop-blur-md text-white border-2 border-white/30 rounded-xl font-semibold hover:bg-white/20 transition-all text-lg">
+        Se connecter
+      </a>
+    </div>
+
+    <!-- Trust Badges -->
+    <div class="flex flex-wrap items-center justify-center gap-8 mt-14 text-sm text-slate-300">
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
+        </svg>
+        <span class="font-medium">100% gratuit</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
+        </svg>
+        <span class="font-medium">Sans carte bancaire</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
+        </svg>
+        <span class="font-medium">Mis à jour quotidiennement</span>
+      </div>
+    </div>
+
+  </div>
+</section>
